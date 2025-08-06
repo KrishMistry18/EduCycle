@@ -1,0 +1,163 @@
+{% extends 'hub/base.html' %}
+
+{% block title %}Order #{{ order.id }} - EduCycle{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="fas fa-shopping-bag"></i> Order #{{ order.id }}</h2>
+                <a href="{% url 'orders' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left"></i> Back to Orders
+                </a>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <!-- Order Details -->
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-gradient-primary text-white">
+                            <h5 class="mb-0"><i class="fas fa-info-circle"></i> Order Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Order Information</h6>
+                                    <p><strong>Order ID:</strong> #{{ order.id }}</p>
+                                    <p><strong>Date:</strong> {{ order.created_at|date:"F d, Y" }}</p>
+                                    <p><strong>Status:</strong> 
+                                        <span class="badge bg-primary">{{ order.get_status_display }}</span>
+                                    </p>
+                                    <p><strong>Total Amount:</strong> ₹{{ order.total_amount }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Shipping Information</h6>
+                                    <p><strong>Address:</strong><br>{{ order.shipping_address }}</p>
+                                    <p><strong>Phone:</strong> {{ order.phone_number }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item Details -->
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-gradient-primary text-white">
+                            <h5 class="mb-0"><i class="fas fa-box"></i> Item Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="me-4" style="width: 80px; height: 80px; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                    {% if order.item.category == 'textbook' %}
+                                        <span style="font-size: 2rem;">📚</span>
+                                    {% elif order.item.category == 'equipment' %}
+                                        <span style="font-size: 2rem;">🔬</span>
+                                    {% elif order.item.category == 'appliance' %}
+                                        <span style="font-size: 2rem;">⚡</span>
+                                    {% elif order.item.category == 'decor' %}
+                                        <span style="font-size: 2rem;">🎨</span>
+                                    {% else %}
+                                        <span style="font-size: 2rem;">📦</span>
+                                    {% endif %}
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h5>{{ order.item.name }}</h5>
+                                    <p class="text-muted mb-2">{{ order.item.description }}</p>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <small class="text-muted">Category</small>
+                                            <div>{{ order.item.get_category_display }}</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <small class="text-muted">Quantity</small>
+                                            <div>{{ order.quantity }}</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <small class="text-muted">Price per item</small>
+                                            <div>₹{{ order.item.price }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <!-- User Information -->
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-gradient-primary text-white">
+                            <h5 class="mb-0"><i class="fas fa-users"></i> User Information</h5>
+                        </div>
+                        <div class="card-body">
+                            {% if user == order.buyer %}
+                                <h6>Seller Information</h6>
+                                <p><strong>Name:</strong> {{ order.seller.first_name }} {{ order.seller.last_name }}</p>
+                                <p><strong>Email:</strong> {{ order.seller.email }}</p>
+                                {% if order.seller.userprofile.phone_number %}
+                                    <p><strong>Phone:</strong> {{ order.seller.userprofile.phone_number }}</p>
+                                {% endif %}
+                            {% else %}
+                                <h6>Buyer Information</h6>
+                                <p><strong>Name:</strong> {{ order.buyer.first_name }} {{ order.buyer.last_name }}</p>
+                                <p><strong>Email:</strong> {{ order.buyer.email }}</p>
+                                <p><strong>Phone:</strong> {{ order.phone_number }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-gradient-primary text-white">
+                            <h5 class="mb-0"><i class="fas fa-calculator"></i> Order Summary</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Item Price:</span>
+                                <span>₹{{ order.item.price }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Quantity:</span>
+                                <span>{{ order.quantity }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Shipping:</span>
+                                <span class="text-success">Free</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <strong>Total:</strong>
+                                <strong class="text-primary">₹{{ order.total_amount }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0">Need Help?</h6>
+                                    <small class="text-muted">Contact support if you have any questions about this order.</small>
+                                </div>
+                                <div class="btn-group">
+                                    <a href="{% url 'send_message' order.item.id %}" class="btn btn-outline-primary">
+                                        <i class="fas fa-comment"></i> Contact Seller
+                                    </a>
+                                    <a href="{% url 'orders' %}" class="btn btn-outline-secondary">
+                                        <i class="fas fa-list"></i> View All Orders
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,8 @@
+
+        <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="300" height="200" fill="#f0f0f0"/>
+            <text x="150" y="100" text-anchor="middle" fill="#666" font-family="Arial" font-size="16">
+                Item Image
+            </text>
+        </svg>
+        

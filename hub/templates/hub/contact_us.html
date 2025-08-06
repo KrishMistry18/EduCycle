@@ -1,0 +1,213 @@
+{% extends 'hub/base.html' %}
+
+{% block title %}Contact Us - EduCycle{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Hero Section -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 mb-3">
+                <i class="fas fa-envelope text-primary"></i> Contact Us
+            </h1>
+            <p class="lead text-muted">We'd love to hear from you! Get in touch with our team.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Contact Form -->
+        <div class="col-md-8 mb-5">
+            <div class="card shadow-sm">
+                <div class="card-header bg-gradient-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-paper-plane"></i> Send us a Message</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Full Name *</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject *</label>
+                            <select class="form-select" id="subject" name="subject" required>
+                                <option value="">Choose a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="support">Technical Support</option>
+                                <option value="bug">Report a Bug</option>
+                                <option value="feature">Feature Request</option>
+                                <option value="partnership">Partnership</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message *</label>
+                            <textarea class="form-control" id="message" name="message" rows="6" placeholder="Tell us how we can help you..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="col-md-4 mb-5">
+            <div class="card shadow-sm">
+                <div class="card-header bg-gradient-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-info-circle"></i> Contact Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex mb-3">
+                        <div class="me-3">
+                            <i class="fas fa-envelope text-primary" style="font-size: 1.5rem;"></i>
+                        </div>
+                        <div>
+                            <h6>Email</h6>
+                            <p class="text-muted mb-0">support@educycle.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex mb-3">
+                        <div class="me-3">
+                            <i class="fas fa-phone text-success" style="font-size: 1.5rem;"></i>
+                        </div>
+                        <div>
+                            <h6>Phone</h6>
+                            <p class="text-muted mb-0">+91 98765 43210</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex mb-3">
+                        <div class="me-3">
+                            <i class="fas fa-map-marker-alt text-warning" style="font-size: 1.5rem;"></i>
+                        </div>
+                        <div>
+                            <h6>Address</h6>
+                            <p class="text-muted mb-0">Campus Address, University<br>City, State - PIN</p>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex mb-3">
+                        <div class="me-3">
+                            <i class="fas fa-clock text-info" style="font-size: 1.5rem;"></i>
+                        </div>
+                        <div>
+                            <h6>Business Hours</h6>
+                            <p class="text-muted mb-0">Mon - Fri: 9:00 AM - 6:00 PM<br>Sat: 10:00 AM - 4:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4">
+                <i class="fas fa-question-circle text-primary"></i> Frequently Asked Questions
+            </h2>
+            
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq1">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                            How do I create an account?
+                        </button>
+                    </h2>
+                    <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Creating an account is easy! Simply click on the "Sign Up" button in the navigation bar and fill out the registration form with your student information.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                            How do I list an item for sale?
+                        </button>
+                    </h2>
+                    <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            After logging in, click on "Add Item" in the navigation bar. Fill out the item details including photos, description, and price, then submit your listing.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq3">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                            Is it safe to buy and sell on EduCycle?
+                        </button>
+                    </h2>
+                    <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Yes! We prioritize safety and trust. All users are verified students, and we have safety guidelines in place. Always meet in public places and verify items before purchase.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq4">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
+                            What payment methods are accepted?
+                        </button>
+                    </h2>
+                    <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            We support various payment methods including cash, digital wallets, and online payments. Payment details are arranged between buyers and sellers.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq5">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5">
+                            How do I report a problem?
+                        </button>
+                    </h2>
+                    <div id="collapse5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            You can report problems through our "Report a Bug" page, contact us via email, or use the contact form above. We'll get back to you within 24 hours.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Social Media Section -->
+    <div class="row">
+        <div class="col-12 text-center">
+            <h3 class="mb-4">Follow Us</h3>
+            <p class="text-muted mb-4">Stay updated with the latest news and announcements</p>
+            <div class="social-links">
+                <a href="#" class="btn btn-outline-primary me-3">
+                    <i class="fab fa-facebook"></i> Facebook
+                </a>
+                <a href="#" class="btn btn-outline-info me-3">
+                    <i class="fab fa-twitter"></i> Twitter
+                </a>
+                <a href="#" class="btn btn-outline-danger me-3">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="#" class="btn btn-outline-primary">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

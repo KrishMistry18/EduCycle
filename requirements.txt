@@ -1,0 +1,23 @@
+# Core Django
+Django==5.2
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+
+# Authentication & Security
+djangorestframework-simplejwt==5.3.0
+django-ratelimit==4.1.0
+
+# API & Documentation
+drf-yasg==1.21.7
+django-filter==23.5
+
+# Development & Testing
+pytest==7.4.3
+pytest-django==4.7.0
+
+# Production
+gunicorn==21.2.0
+whitenoise==6.6.0
+
+# Additional Utilities
+python-dotenv==1.0.0 

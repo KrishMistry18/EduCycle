@@ -1,0 +1,304 @@
+{% extends 'hub/base.html' %}
+
+{% block title %}EduCycle Assistant - Chatbot{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-gradient-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-robot"></i> EduCycle Assistant
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <!-- Chat Messages Container -->
+                    <div id="chat-messages" class="chat-container mb-3" style="height: 400px; overflow-y: auto;">
+                        <!-- Messages will be loaded here -->
+                    </div>
+                    
+                    <!-- Suggested Questions -->
+                    <div class="suggested-questions mb-3">
+                        <h6 class="text-muted mb-2">Quick Questions:</h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for question in suggested_questions %}
+                                <button class="btn btn-sm btn-outline-primary suggested-question" 
+                                        onclick="sendSuggestedQuestion('{{ question }}')">
+                                    {{ question }}
+                                </button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Input -->
+                    <div class="chat-input-container">
+                        <form id="chat-form" class="d-flex">
+                            {% csrf_token %}
+                            <input type="text" id="message-input" class="form-control me-2" 
+                                   placeholder="Type your message here..." required>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Send
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let sessionId = '{{ request.session.session_key|default:"" }}' || generateSessionId();
+let isTyping = false;
+
+function generateSessionId() {
+    return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+}
+
+// Initialize chat
+document.addEventListener('DOMContentLoaded', function() {
+    loadWelcomeMessage();
+    loadChatHistory();
+});
+
+function loadWelcomeMessage() {
+    const chatMessages = document.getElementById('chat-messages');
+    const welcomeDiv = document.createElement('div');
+    welcomeDiv.className = 'message bot-message';
+    welcomeDiv.innerHTML = `
+        <div class="message-content">
+            <div class="message-text">
+                {{ welcome_message|linebreaks }}
+            </div>
+            <small class="message-time">${new Date().toLocaleTimeString()}</small>
+        </div>
+    `;
+    chatMessages.appendChild(welcomeDiv);
+    scrollToBottom();
+}
+
+function loadChatHistory() {
+    fetch(`/chatbot/history/${sessionId}/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.messages && data.messages.length > 0) {
+                const chatMessages = document.getElementById('chat-messages');
+                chatMessages.innerHTML = ''; // Clear welcome message
+                
+                data.messages.forEach(msg => {
+                    addMessageToChat(msg.content, msg.type, msg.timestamp);
+                });
+            }
+        })
+        .catch(error => console.error('Error loading chat history:', error));
+}
+
+function addMessageToChat(message, type, timestamp = null) {
+    const chatMessages = document.getElementById('chat-messages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${type}-message`;
+    
+    const time = timestamp || new Date().toLocaleTimeString();
+    
+    messageDiv.innerHTML = `
+        <div class="message-content">
+            <div class="message-text">${message.replace(/\n/g, '<br>')}</div>
+            <small class="message-time">${time}</small>
+        </div>
+    `;
+    
+    chatMessages.appendChild(messageDiv);
+    scrollToBottom();
+}
+
+function scrollToBottom() {
+    const chatMessages = document.getElementById('chat-messages');
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function sendSuggestedQuestion(question) {
+    document.getElementById('message-input').value = question;
+    document.getElementById('chat-form').dispatchEvent(new Event('submit'));
+}
+
+// Handle form submission
+document.getElementById('chat-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const messageInput = document.getElementById('message-input');
+    const message = messageInput.value.trim();
+    
+    if (!message || isTyping) return;
+    
+    // Add user message to chat
+    addMessageToChat(message, 'user');
+    messageInput.value = '';
+    
+    // Show typing indicator
+    showTypingIndicator();
+    
+    // Send message to server
+    fetch('/chatbot/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+        },
+        body: `message=${encodeURIComponent(message)}&session_id=${sessionId}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        hideTypingIndicator();
+        if (data.response) {
+            addMessageToChat(data.response, 'bot');
+        }
+    })
+    .catch(error => {
+        hideTypingIndicator();
+        console.error('Error sending message:', error);
+        addMessageToChat('Sorry, I encountered an error. Please try again.', 'bot');
+    });
+});
+
+function showTypingIndicator() {
+    isTyping = true;
+    const chatMessages = document.getElementById('chat-messages');
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'message bot-message typing-indicator';
+    typingDiv.id = 'typing-indicator';
+    typingDiv.innerHTML = `
+        <div class="message-content">
+            <div class="message-text">
+                <span class="typing-dots">
+                    <span></span><span></span><span></span>
+                </span>
+            </div>
+        </div>
+    `;
+    chatMessages.appendChild(typingDiv);
+    scrollToBottom();
+}
+
+function hideTypingIndicator() {
+    isTyping = false;
+    const typingIndicator = document.getElementById('typing-indicator');
+    if (typingIndicator) {
+        typingIndicator.remove();
+    }
+}
+</script>
+
+<style>
+.chat-container {
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+}
+
+.message {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-message {
+    align-items: flex-end;
+}
+
+.bot-message {
+    align-items: flex-start;
+}
+
+.message-content {
+    max-width: 70%;
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+    position: relative;
+}
+
+.user-message .message-content {
+    background-color: #007bff;
+    color: white;
+    border-bottom-right-radius: 0.25rem;
+}
+
+.bot-message .message-content {
+    background-color: white;
+    color: #212529;
+    border: 1px solid #dee2e6;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.message-text {
+    margin-bottom: 0.25rem;
+    line-height: 1.4;
+}
+
+.message-time {
+    opacity: 0.7;
+    font-size: 0.75rem;
+}
+
+.suggested-questions {
+    border-top: 1px solid #dee2e6;
+    padding-top: 1rem;
+}
+
+.suggested-question {
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.chat-input-container {
+    border-top: 1px solid #dee2e6;
+    padding-top: 1rem;
+}
+
+.typing-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.typing-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #6c757d;
+    animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.typing-dots span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes typing {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .message-content {
+        max-width: 85%;
+    }
+    
+    .suggested-questions .btn {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+    }
+}
+</style>
+{% endblock %} 
