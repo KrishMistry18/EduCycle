@@ -277,9 +277,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 **Contact**
 
-- **Project Link**:https://github.com/KrishMistry18/EduCycle
-- **Email**:mistrykrish2005@gmail.com
-- **LinkedIn**:linkedin.com/in/krish-mistry-0290522b7
+- Project: <https://github.com/KrishMistry18/EduCycle>
+- Email: <mistrykrish2005@gmail.com>
+- LinkedIn: <https://www.linkedin.com/in/krish-mistry-0290522b7>
 
 ---
 
