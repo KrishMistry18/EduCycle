@@ -277,10 +277,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 **Contact**
 
-- **Project Link**: [https://github.com/yourusername/edicycle](https://github.com/yourusername/edicycle)
-- **Email**: your.email@example.com
-- **LinkedIn**: [Your LinkedIn Profile](https://linkedin.com/in/yourprofile)
+- **Project Link**:https://github.com/KrishMistry18/EduCycle
+- **Email**:mistrykrish2005@gmail.com
+- **LinkedIn**:linkedin.com/in/krish-mistry-0290522b7
 
 ---
 
-**Built with ❤️ by [Your Name]** 
+**Built with ❤️ by Krish Mistry** 
