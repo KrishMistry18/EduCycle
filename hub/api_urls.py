@@ -35,4 +35,5 @@ urlpatterns = [
     path('my-cart/', CartViewSet.as_view({'get': 'my_cart'}), name='api_my_cart'),
     path('messages/received/', MessageViewSet.as_view({'get': 'received'}), name='api_messages_received'),
     path('messages/sent/', MessageViewSet.as_view({'get': 'sent'}), name='api_messages_sent'),
+    path('notifications/unread-count/', MessageViewSet.as_view({'get': 'unread_notifications_count'}), name='api_unread_notifications_count'),
 ] 

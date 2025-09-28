@@ -166,6 +166,13 @@ class MessageViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(messages, many=True)
         return Response(serializer.data)
 
+    @action(detail=False, methods=['get'])
+    def unread_notifications_count(self, request):
+        """Get count of unread notifications for the current user"""
+        from .models import Notification
+        unread_count = Notification.objects.filter(user=request.user, is_read=False).count()
+        return Response({'count': unread_count})
+
 class CartViewSet(viewsets.ModelViewSet):
     serializer_class = CartSerializer
     permission_classes = [IsAuthenticated]

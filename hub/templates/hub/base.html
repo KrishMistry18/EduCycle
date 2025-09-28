@@ -7,6 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Anime.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <style>
         :root {
             --primary-color: #6366f1;
@@ -123,6 +125,68 @@
             background: rgba(255, 255, 255, 0.15);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            position: relative;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 8px;
+            height: 8px;
+            background: var(--danger-color);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            position: relative;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 8px;
+            height: 8px;
+            background: var(--danger-color);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         /* Container and Layout */
@@ -421,11 +485,48 @@
         .social-links a {
             color: rgba(255, 255, 255, 0.7);
             font-size: 1.2rem;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+            display: inline-block;
         }
 
         .social-links a:hover {
             color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Social Media Hover Colors */
+        .social-links .fa-facebook:hover {
+            color: #1877f2 !important;
+        }
+
+        .social-links .fa-twitter:hover {
+            color: #1da1f2 !important;
+        }
+
+        .social-links .fa-instagram:hover {
+            color: #e4405f !important;
+        }
+
+        .social-links .fa-linkedin:hover {
+            color: #0077b5 !important;
+        }
+
+        /* Social Media Hover Colors */
+        .social-links .fa-facebook:hover {
+            color: #1877f2 !important;
+        }
+
+        .social-links .fa-twitter:hover {
+            color: #1da1f2 !important;
+        }
+
+        .social-links .fa-instagram:hover {
+            color: #e4405f !important;
+        }
+
+        .social-links .fa-linkedin:hover {
+            color: #0077b5 !important;
         }
 
         .footer-divider {
@@ -453,6 +554,66 @@
         .footer-badges .badge {
             font-size: 0.75rem;
             padding: 0.5rem 0.75rem;
+        }
+
+        /* Footer Flex Layout */
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h6 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer Flex Layout */
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h6 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
         }
 
         /* Amazon-style Search Bar */
@@ -553,6 +714,137 @@
             font-weight: 500;
         }
 
+        /* Floating Chatbot */
+        .floating-chatbot {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .floating-chatbot-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .floating-chatbot-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        .floating-chatbot-tooltip {
+            position: absolute;
+            right: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #333;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .floating-chatbot-tooltip::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-left: 5px solid #333;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+        }
+
+        .floating-chatbot-icon:hover .floating-chatbot-tooltip {
+            opacity: 1;
+            visibility: visible;
+            right: 80px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Floating Chatbot */
+        .floating-chatbot {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .floating-chatbot-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .floating-chatbot-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        .floating-chatbot-tooltip {
+            position: absolute;
+            right: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #333;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .floating-chatbot-tooltip::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-left: 5px solid #333;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+        }
+
+        .floating-chatbot-icon:hover .floating-chatbot-tooltip {
+            opacity: 1;
+            visibility: visible;
+            right: 80px;
+        }
+
         /* Responsive design for Amazon search */
         @media (max-width: 768px) {
             .amazon-search-container {
@@ -590,6 +882,50 @@
             /* Mobile responsive for horizontal search */
             .row.align-items-end > div {
                 margin-bottom: 1rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .footer-section {
+                min-width: auto;
+            }
+
+            .floating-chatbot {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .floating-chatbot-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+            }
+            
+            .floating-chatbot-tooltip {
+                display: none;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .footer-section {
+                min-width: auto;
+            }
+
+            .floating-chatbot {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .floating-chatbot-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
             }
         }
 
@@ -683,9 +1019,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'notifications' %}">
+                            <a class="nav-link notification-badge" href="{% url 'notifications' %}" onclick="handleNotificationClick(event)">
                                 <i class="fas fa-bell me-1"></i>Notifications
-                                <span id="notification-count" class="badge bg-danger" style="display: none;">0</span>
+                                <div class="notification-dot" id="notification-dot" style="display: none;"></div>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -734,58 +1070,72 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4">
+            <div class="footer-content">
+                <!-- Brand Section -->
+                <div class="footer-section">
                     <h5><i class="fas fa-palette me-2"></i>EduCycle</h5>
                     <p class="text-muted">Connecting students through sustainable commerce. Buy, sell, and swap campus essentials with your community.</p>
                     <div class="social-links mt-3">
-                        <a href="#" class="me-3"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="me-3"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="me-3"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://facebook.com/educycle" target="_blank" title="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://twitter.com/educycle" target="_blank" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://instagram.com/educycle" target="_blank" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://linkedin.com/company/educycle" target="_blank" title="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
                     </div>
                 </div>
                 
-                <div class="col-md-2">
-                    <h6 class="text-white mb-3">Quick Links</h6>
-                    <ul class="list-unstyled">
+                <!-- Quick Links Section -->
+                <div class="footer-section">
+                    <h6>Quick Links</h6>
+                    <ul>
                         <li><a href="{% url 'about_us' %}" class="footer-link">About Us</a></li>
-                        <li><a href="#" class="footer-link">How It Works</a></li>
-                        <li><a href="#" class="footer-link">Safety Guidelines</a></li>
-                        <li><a href="#" class="footer-link">Terms of Service</a></li>
+                        <li><a href="{% url 'help_center' %}" class="footer-link">How It Works</a></li>
+                        <li><a href="{% url 'help_center' %}#safety" class="footer-link">Safety Guidelines</a></li>
+                        <li><a href="{% url 'help_center' %}#terms" class="footer-link">Terms of Service</a></li>
+                        <li><a href="{% url 'item_list' %}" class="footer-link">Browse Items</a></li>
+                        <li><a href="{% url 'item_create' %}" class="footer-link">Sell Items</a></li>
                     </ul>
                 </div>
                 
-                <div class="col-md-2">
-                    <h6 class="text-white mb-3">Support</h6>
-                    <ul class="list-unstyled">
+                <!-- Support Section -->
+                <div class="footer-section">
+                    <h6>Support</h6>
+                    <ul>
                         <li><a href="{% url 'contact_us' %}" class="footer-link">Contact Us</a></li>
                         <li><a href="{% url 'help_center' %}" class="footer-link">Help Center</a></li>
                         <li><a href="{% url 'report_bug' %}" class="footer-link">Report a Bug</a></li>
-                        <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="{% url 'help_center' %}#privacy" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="{% url 'chatbot' %}" class="footer-link">AI Assistant</a></li>
+                        <li><a href="mailto:support@educycle.com" class="footer-link">Email Support</a></li>
                     </ul>
                 </div>
                 
-                <div class="col-md-4">
-                    <h6 class="text-white mb-3">Get in Touch</h6>
-                    <p class="text-muted mb-2">
-                        <i class="fas fa-envelope me-2"></i>support@educycle.com
-                    </p>
-                    <p class="text-muted mb-2">
-                        <i class="fas fa-phone me-2"></i>+91 98765 43210
-                    </p>
-                    <p class="text-muted mb-3">
-                        <i class="fas fa-map-marker-alt me-2"></i>Campus Address, University
-                    </p>
-                    
+                <!-- Newsletter Section -->
+                <div class="footer-section">
+                    <h6>Stay Updated</h6>
+                    <p class="text-muted mb-3">Get the latest updates and exclusive offers.</p>
                     <div class="newsletter-signup">
-                        <h6 class="text-white mb-2">Stay Updated</h6>
                         <div class="input-group">
-                            <input type="email" class="form-control" placeholder="Enter your email">
-                            <button class="btn btn-primary" type="button">
+                            <input type="email" class="form-control" placeholder="Enter your email" id="newsletter-email">
+                            <button class="btn btn-primary" type="button" onclick="subscribeNewsletter()">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
                         </div>
+                    </div>
+                    <div class="mt-3">
+                        <p class="text-muted mb-2">
+                            <i class="fas fa-envelope me-2"></i>support@educycle.com
+                        </p>
+                        <p class="text-muted mb-2">
+                            <i class="fas fa-phone me-2"></i>+91 98765 43210
+                        </p>
                     </div>
                 </div>
             </div>
@@ -813,6 +1163,122 @@
         </div>
     </footer>
 
+    <!-- Floating Chatbot Icon (only on pages other than chatbot) -->
+    {% if request.resolver_match.url_name != 'chatbot' %}
+    <div class="floating-chatbot" id="floating-chatbot">
+        <div class="floating-chatbot-icon" onclick="openFloatingChat()">
+            <i class="fas fa-robot"></i>
+            <div class="floating-chatbot-tooltip">
+                <span>How can I help you?</span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// Initialize animations on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate page elements
+    anime({
+        targets: '.fade-in-up',
+        opacity: [0, 1],
+        translateY: [30, 0],
+        duration: 800,
+        delay: anime.stagger(100),
+        easing: 'easeOutCubic'
+    });
+
+    // Animate floating chatbot
+    if (document.getElementById('floating-chatbot')) {
+        anime({
+            targets: '#floating-chatbot',
+            opacity: [0, 1],
+            translateY: [50, 0],
+            delay: 1000,
+            duration: 800,
+            easing: 'easeOutCubic'
+        });
+    }
+
+    // Check for new notifications
+    checkNotifications();
+});
+
+// Floating chatbot functionality
+function openFloatingChat() {
+    window.location.href = '/chatbot/';
+}
+
+// Newsletter subscription
+function subscribeNewsletter() {
+    const email = document.getElementById('newsletter-email').value;
+    if (email) {
+        // Here you would typically send this to your backend
+        alert('Thank you for subscribing! We\'ll keep you updated.');
+        document.getElementById('newsletter-email').value = '';
+    } else {
+        alert('Please enter a valid email address.');
+    }
+}
+
+// Check for new notifications
+function checkNotifications() {
+    {% if user.is_authenticated %}
+    fetch('/api/notifications/unread-count/')
+        .then(response => response.json())
+        .then(data => {
+            const notificationDot = document.getElementById('notification-dot');
+            if (data.count > 0) {
+                notificationDot.style.display = 'block';
+                // Animate the dot
+                anime({
+                    targets: notificationDot,
+                    scale: [1, 1.2, 1],
+                    duration: 1000,
+                    loop: true,
+                    easing: 'easeInOutQuad'
+                });
+            } else {
+                notificationDot.style.display = 'none';
+            }
+        })
+        .catch(error => console.error('Error checking notifications:', error));
+    {% endif %}
+}
+
+// Check notifications every 30 seconds
+setInterval(checkNotifications, 30000);
+
+// Handle notification link click to dismiss the red dot
+function handleNotificationClick(event) {
+    const notificationDot = document.getElementById('notification-dot');
+    if (notificationDot && notificationDot.style.display !== 'none') {
+        // Animate the dot disappearing
+        anime({
+            targets: notificationDot,
+            opacity: [1, 0],
+            scale: [1, 0],
+            duration: 300,
+            easing: 'easeOutCubic',
+            complete: function() {
+                notificationDot.style.display = 'none';
+            }
+        });
+        
+        // Mark all notifications as read when clicking the notification link
+        {% if user.is_authenticated %}
+        fetch('/notifications/mark-all-read/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+        })
+        .catch(error => console.error('Error marking notifications as read:', error));
+        {% endif %}
+    }
+}
+</script>
 </body>
 </html> 

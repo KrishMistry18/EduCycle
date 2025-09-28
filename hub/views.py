@@ -414,8 +414,7 @@ def orders(request):
     # Get orders where user is seller
     seller_orders = Order.objects.filter(seller=request.user).order_by('-created_at')
     
-    # Debug: Print order counts
-    print(f"Debug: User {request.user.username} has {buyer_orders.count()} buyer orders and {seller_orders.count()} seller orders")
+    
     
     return render(request, 'hub/orders.html', {
         'bought_orders': buyer_orders,
@@ -441,42 +440,7 @@ def order_detail(request, order_id):
         messages.error(request, 'Order not found.')
         return redirect('orders')
 
-@login_required
-def remove_all_items(request):
-    """Remove all items from the database. Only accessible by superusers."""
-    if not request.user.is_superuser:
-        messages.error(request, 'You do not have permission to perform this action.')
-        return redirect('home')
-    
-    if request.method == 'POST':
-        try:
-            # Get count before deletion for confirmation message
-            item_count = Item.objects.count()
-            
-            # Delete all items
-            Item.objects.all().delete()
-            
-            # Also clear all cart items since they reference items
-            CartItem.objects.all().delete()
-            
-            # Clear all messages since they reference items
-            Message.objects.all().delete()
-            
-            # Clear all order items since they reference items
-            OrderItem.objects.all().delete()
-            
-            # Clear all orders since they reference items
-            Order.objects.all().delete()
-            
-            messages.success(request, f'Successfully removed all {item_count} items and related data.')
-            return redirect('home')
-        except Exception as e:
-            messages.error(request, f'Error removing items: {str(e)}')
-            return redirect('home')
-    
-    # GET request - show confirmation page
-    item_count = Item.objects.count()
-    return render(request, 'hub/remove_all_items.html', {'item_count': item_count})
+
 
 @login_required
 def payment_page(request, order_id):
@@ -631,28 +595,58 @@ def mark_all_notifications_read(request):
 
 # Chatbot Views
 def chatbot(request):
-    """Chatbot interface"""
+    """Enhanced chatbot interface"""
     if request.method == 'POST':
-        message = request.POST.get('message')
+        message = request.POST.get('message', '').strip()
         session_id = request.POST.get('session_id', str(uuid.uuid4()))
         
         if message:
-            chatbot = EduCycleChatbot()
-            response = chatbot.get_response(message, session_id)
+            try:
+                chatbot = EduCycleChatbot()
+                response = chatbot.get_response(message, session_id)
+                return JsonResponse({
+                    'response': response,
+                    'session_id': session_id,
+                    'success': True
+                })
+            except Exception as e:
+                return JsonResponse({
+                    'response': "I'm sorry, I encountered an error. Please try again or contact support if the problem persists.",
+                    'session_id': session_id,
+                    'success': False,
+                    'error': str(e)
+                })
+        else:
             return JsonResponse({
-                'response': response,
-                'session_id': session_id
+                'response': "Please enter a message to get help.",
+                'session_id': session_id,
+                'success': False
             })
     
     # For GET request, return the chatbot page
-    chatbot = EduCycleChatbot()
-    suggested_questions = chatbot.get_suggested_questions()
-    welcome_message = chatbot.get_welcome_message()
-    
-    return render(request, 'hub/chatbot.html', {
-        'suggested_questions': suggested_questions,
-        'welcome_message': welcome_message
-    })
+    try:
+        chatbot = EduCycleChatbot()
+        suggested_questions = chatbot.get_suggested_questions()
+        welcome_message = chatbot.get_welcome_message()
+        quick_stats = chatbot.get_quick_stats()
+        
+        return render(request, 'hub/chatbot.html', {
+            'suggested_questions': suggested_questions,
+            'welcome_message': welcome_message,
+            'quick_stats': quick_stats
+        })
+    except Exception as e:
+        # Fallback if chatbot fails to load
+        return render(request, 'hub/chatbot.html', {
+            'suggested_questions': [
+                "How do I buy items?",
+                "How do I sell items?",
+                "How do I create an account?",
+                "Is it safe to meet sellers?"
+            ],
+            'welcome_message': "Welcome to EduCycle! I'm here to help you with buying, selling, and using our platform.",
+            'quick_stats': "Join our growing community of students!"
+        })
 
 def get_chat_history(request, session_id):
     """Get chat history for a session"""
@@ -668,3 +662,5 @@ def get_chat_history(request, session_id):
         })
     
     return JsonResponse({'messages': messages})
+
+

@@ -15,7 +15,7 @@ urlpatterns = [
     path('items/<int:item_id>/delete/', views.item_delete, name='item_delete'),
     path('items/<int:item_id>/message/', views.send_message, name='send_message'),
     path('search-suggestions/', views.search_suggestions, name='search_suggestions'),
-    path('remove-all-items/', views.remove_all_items, name='remove_all_items'),
+
     
     # Cart functionality
     path('cart/', views.cart, name='cart'),
@@ -58,4 +58,7 @@ urlpatterns = [
     # Chatbot
     path('chatbot/', views.chatbot, name='chatbot'),
     path('chatbot/history/<str:session_id>/', views.get_chat_history, name='get_chat_history'),
+    
+    # QR Code for API access
+
 ] 
