@@ -2,11 +2,6 @@
 
 A full-stack e-commerce platform built with Django REST Framework, featuring real-time communication, advanced search, and modern authentication. Designed for students to buy, sell, and exchange academic and hostel essentials within their campus community.
 
-## 🚀 **Live Demo**
-- **Web Application**: [http://localhost:8000](http://localhost:8000)
-- **API Documentation**: [http://localhost:8000/api/docs/](http://localhost:8000/api/docs/)
-- **Admin Panel**: [http://localhost:8000/admin/](http://localhost:8000/admin/)
-
 ## ✨ **Key Features**
 
 ### 🔐 **Advanced Authentication & Security**
@@ -275,12 +270,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 📞 **Contact**
-
-- **Project Link**: [https://github.com/yourusername/edicycle](https://github.com/yourusername/edicycle)
-- **Email**: your.email@example.com
-- **LinkedIn**: [Your LinkedIn Profile](https://linkedin.com/in/yourprofile)
-
+## 👤 Author
+Built with ❤️ by Krish Mistry
+- Email: mistrykrish2005@gmail.com
+- GitHub: https://github.com/KrishMistry18
+- LinkedIn: https://www.linkedin.com/in/krishmistry18
 ---
 
-**Built with ❤️ by [Your Name]** 
+**Built with ❤️ by Krish Mistry** 
