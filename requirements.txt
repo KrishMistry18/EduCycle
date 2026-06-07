@@ -15,7 +15,7 @@ django-ratelimit==4.1.0
 
 # ─── Database (PostgreSQL for Supabase/Vercel) ────────────────
 dj-database-url==2.1.0
-# psycopg2-binary==2.9.10
+psycopg2-binary==2.9.10
 
 # ─── Payments ─────────────────────────────────────────────────
 stripe>=7.0.0
