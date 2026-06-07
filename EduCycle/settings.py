@@ -130,14 +130,20 @@ TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
-# ─── Static Files ─────────────────────────────────────────────
+# ─── Static and Media Files ───────────────────────────────────
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-
-# ─── Media Files ──────────────────────────────────────────────
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
 
 # ─── Firebase Storage ─────────────────────────────────────────
 import json
@@ -146,7 +152,9 @@ from google.oauth2 import service_account
 USE_FIREBASE_STORAGE = os.environ.get('USE_FIREBASE_STORAGE', 'False') == 'True'
 
 if USE_FIREBASE_STORAGE:
-    DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+    }
     GS_BUCKET_NAME = os.environ.get('GS_BUCKET_NAME', 'edycycle-2b8e7.appspot.com')
     GS_DEFAULT_ACL = 'publicRead'
     
@@ -161,6 +169,7 @@ if USE_FIREBASE_STORAGE:
         local_key_path = BASE_DIR / 'edycycle-2b8e7-firebase-adminsdk-fbsvc-888063912e.json'
         if local_key_path.exists():
             GS_CREDENTIALS = service_account.Credentials.from_service_account_file(str(local_key_path))
+
 
 # ─── Default PK ───────────────────────────────────────────────
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
