@@ -152,8 +152,11 @@ if USE_FIREBASE_STORAGE:
     
     firebase_creds_json = os.environ.get('FIREBASE_CREDENTIALS_JSON')
     if firebase_creds_json:
-        creds_dict = json.loads(firebase_creds_json)
-        GS_CREDENTIALS = service_account.Credentials.from_service_account_info(creds_dict)
+        try:
+            creds_dict = json.loads(firebase_creds_json)
+            GS_CREDENTIALS = service_account.Credentials.from_service_account_info(creds_dict)
+        except json.JSONDecodeError:
+            print("ERROR: FIREBASE_CREDENTIALS_JSON is not a valid JSON string.")
     else:
         local_key_path = BASE_DIR / 'edycycle-2b8e7-firebase-adminsdk-fbsvc-888063912e.json'
         if local_key_path.exists():
