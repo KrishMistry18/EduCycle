@@ -35,4 +35,5 @@ setuptools>=68.0.0
 
 # ─── Storage ──────────────────────────────────────────────────
 django-storages==1.14.2
-google-cloud-storage==2.14.0
+cloudinary==1.38.0
+dj3-cloudinary-storage==0.0.6

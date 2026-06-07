@@ -145,30 +145,17 @@ STORAGES = {
     },
 }
 
-# ─── Firebase Storage ─────────────────────────────────────────
-import json
-from google.oauth2 import service_account
+# ─── Cloudinary Storage ───────────────────────────────────────
+import cloudinary
 
-USE_FIREBASE_STORAGE = os.environ.get('USE_FIREBASE_STORAGE', 'False') == 'True'
-
-if USE_FIREBASE_STORAGE:
-    STORAGES["default"] = {
-        "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
-    }
-    GS_BUCKET_NAME = os.environ.get('GS_BUCKET_NAME', 'edycycle-2b8e7.appspot.com')
-    GS_DEFAULT_ACL = 'publicRead'
+# Only use Cloudinary if CLOUDINARY_URL is present
+if 'CLOUDINARY_URL' in os.environ:
+    INSTALLED_APPS.append('cloudinary_storage')
+    INSTALLED_APPS.append('cloudinary')
     
-    firebase_creds_json = os.environ.get('FIREBASE_CREDENTIALS_JSON')
-    if firebase_creds_json:
-        try:
-            creds_dict = json.loads(firebase_creds_json)
-            GS_CREDENTIALS = service_account.Credentials.from_service_account_info(creds_dict)
-        except json.JSONDecodeError:
-            print("ERROR: FIREBASE_CREDENTIALS_JSON is not a valid JSON string.")
-    else:
-        local_key_path = BASE_DIR / 'edycycle-2b8e7-firebase-adminsdk-fbsvc-888063912e.json'
-        if local_key_path.exists():
-            GS_CREDENTIALS = service_account.Credentials.from_service_account_file(str(local_key_path))
+    STORAGES["default"] = {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    }
 
 
 # ─── Default PK ───────────────────────────────────────────────
