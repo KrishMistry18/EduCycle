@@ -17,5 +17,12 @@ except Exception as e:
     print(f"[WSGI] Migration error: {e}", file=sys.stderr)
     traceback.print_exc(file=sys.stderr)
 
-from django.core.wsgi import get_wsgi_application
-application = get_wsgi_application()
+try:
+    from django.core.wsgi import get_wsgi_application
+    application = get_wsgi_application()
+except Exception as e:
+    import traceback
+    err_msg = traceback.format_exc()
+    def application(environ, start_response):
+        start_response('500 Internal Server Error', [('Content-Type', 'text/plain')])
+        return [err_msg.encode('utf-8')]
