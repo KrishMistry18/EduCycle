@@ -1,0 +1,272 @@
+{% extends 'hub/base.html' %}
+
+{% block title %}Available Items - EduCycle{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Amazon-style Search Bar -->
+    <div class="amazon-search-container mb-4">
+        <div class="search-wrapper">
+            <form method="get" action="{% url 'item_list' %}" class="amazon-search-form">
+                <div class="search-input-group">
+                    <div class="category-dropdown">
+                        <select class="category-select" name="category">
+                            <option value="">All Categories</option>
+                            <option value="textbook" {% if category_filter == 'textbook' %}selected{% endif %}>Textbooks</option>
+                            <option value="equipment" {% if category_filter == 'equipment' %}selected{% endif %}>Lab Equipment</option>
+                            <option value="decor" {% if category_filter == 'decor' %}selected{% endif %}>Room Decor</option>
+                            <option value="appliance" {% if category_filter == 'appliance' %}selected{% endif %}>Appliances</option>
+                            <option value="other" {% if category_filter == 'other' %}selected{% endif %}>Other</option>
+                        </select>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </div>
+                    <input type="text" class="search-input" name="search" value="{{ search_query }}" placeholder="Search EduCycle...">
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+                        </div>
+                        
+        {% if user.is_authenticated %}
+        <div class="add-item-button">
+            <a href="{% url 'item_create' %}" class="btn btn-success">
+                <i class="fas fa-plus"></i> Add Item
+            </a>
+                        </div>
+        {% endif %}
+</div>
+
+        <!-- Items Display Section -->
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="fas fa-gallery-thumbnails"></i> Available Items</h2>
+                <div class="text-muted">
+                    <i class="fas fa-info-circle"></i> {{ items.count }} items found
+                </div>
+            </div>
+
+            {% if items %}
+<div class="row">
+    {% for item in items %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm hover-lift">
+                        <div class="card-img-top" style="height: 200px; position: relative; overflow: hidden; border-radius: 0.375rem 0.375rem 0 0;">
+                            {% if item.image1 %}
+                                <img src="{{ item.image1.url }}" alt="{{ item.name }}" class="w-100 h-100" style="object-fit: cover;">
+                            {% else %}
+                                <!-- Fallback to category-based design when no image -->
+                            {% if item.category == 'textbook' %}
+                                <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📚</div>
+                                    <div style="background: #1976d2; color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; margin-bottom: 0.5rem;">Textbook</div>
+                                    <div style="font-size: 0.875rem; font-weight: bold; color: #1f2937; margin-bottom: 0.25rem;">{{ item.name|truncatechars:20 }}</div>
+                                    <div style="font-size: 1.25rem; font-weight: bold; color: #059669;">₹{{ item.price }}</div>
+                                </div>
+                            {% elif item.category == 'equipment' %}
+                                <div style="background: linear-gradient(135deg, #f3e5f5 0%, #ce93d8 100%); width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔬</div>
+                                    <div style="background: #7b1fa2; color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; margin-bottom: 0.5rem;">Lab Equipment</div>
+                                    <div style="font-size: 0.875rem; font-weight: bold; color: #1f2937; margin-bottom: 0.25rem;">{{ item.name|truncatechars:20 }}</div>
+                                    <div style="font-size: 1.25rem; font-weight: bold; color: #059669;">₹{{ item.price }}</div>
+                                </div>
+                            {% elif item.category == 'appliance' %}
+                                <div style="background: linear-gradient(135deg, #e8f5e8 0%, #a5d6a7 100%); width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚡</div>
+                                    <div style="background: #388e3c; color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; margin-bottom: 0.5rem;">Appliance</div>
+                                    <div style="font-size: 0.875rem; font-weight: bold; color: #1f2937; margin-bottom: 0.25rem;">{{ item.name|truncatechars:20 }}</div>
+                                    <div style="font-size: 1.25rem; font-weight: bold; color: #059669;">₹{{ item.price }}</div>
+                                </div>
+                            {% elif item.category == 'decor' %}
+                                <div style="background: linear-gradient(135deg, #fff3e0 0%, #ffcc02 100%); width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎨</div>
+                                    <div style="background: #f57c00; color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; margin-bottom: 0.5rem;">Room Decor</div>
+                                    <div style="font-size: 0.875rem; font-weight: bold; color: #1f2937; margin-bottom: 0.25rem;">{{ item.name|truncatechars:20 }}</div>
+                                    <div style="font-size: 1.25rem; font-weight: bold; color: #059669;">₹{{ item.price }}</div>
+                                </div>
+                            {% else %}
+                                <div style="background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%); width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📦</div>
+                                    <div style="background: #c2185b; color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; margin-bottom: 0.5rem;">Other</div>
+                                    <div style="font-size: 0.875rem; font-weight: bold; color: #1f2937; margin-bottom: 0.25rem;">{{ item.name|truncatechars:20 }}</div>
+                                    <div style="font-size: 1.25rem; font-weight: bold; color: #059669;">₹{{ item.price }}</div>
+                                </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="card-body d-flex flex-column">
+                            <div class="mb-2">
+                                <span class="badge bg-secondary">
+                                    {% if item.category == 'textbook' %}
+                                        <i class="fas fa-book-open"></i>
+                                    {% elif item.category == 'equipment' %}
+                                        <i class="fas fa-tools"></i>
+                                    {% elif item.category == 'decor' %}
+                                        <i class="fas fa-paint-brush"></i>
+                                    {% elif item.category == 'appliance' %}
+                                        <i class="fas fa-plug"></i>
+                                    {% else %}
+                                        <i class="fas fa-ellipsis-h"></i>
+                                    {% endif %}
+                                    {{ item.get_category_display }}
+                                </span>
+                            </div>
+                            
+                            <h5 class="card-title">{{ item.name }}</h5>
+                            <p class="card-text text-muted">{{ item.description|truncatewords:15 }}</p>
+                            
+                            <div class="mt-auto">
+                                {% if item.price %}
+                                <div class="mb-2">
+                                    <span class="h5 text-primary mb-0">₹{{ item.price }}</span>
+                                </div>
+                                {% endif %}
+                                
+
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        <i class="fas fa-user"></i> {{ item.seller.first_name }} {{ item.seller.last_name }}
+                                    </small>
+                                    <a href="{% url 'item_detail' item.id %}" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-search text-muted" style="font-size: 4rem;"></i>
+                <h3 class="text-muted mt-3">No items found</h3>
+                <p class="text-muted">Try adjusting your search criteria or browse all categories.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Search Suggestions JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search');
+    const suggestionsContainer = document.createElement('div');
+    suggestionsContainer.className = 'search-suggestions';
+    suggestionsContainer.style.cssText = `
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ddd;
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    `;
+    
+    // Insert suggestions container after search input
+    searchInput.parentNode.style.position = 'relative';
+    searchInput.parentNode.appendChild(suggestionsContainer);
+    
+    let searchTimeout;
+    
+    searchInput.addEventListener('input', function() {
+        const query = this.value.trim();
+        
+        // Clear previous timeout
+        clearTimeout(searchTimeout);
+        
+        // Hide suggestions if query is too short
+        if (query.length < 2) {
+            suggestionsContainer.style.display = 'none';
+            return;
+        }
+        
+        // Debounce the search
+        searchTimeout = setTimeout(function() {
+            fetch(`{% url 'search_suggestions' %}?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    displaySuggestions(data.suggestions);
+                })
+                .catch(error => {
+                    console.error('Error fetching suggestions:', error);
+                });
+        }, 300);
+    });
+    
+    function displaySuggestions(suggestions) {
+        if (suggestions.length === 0) {
+            suggestionsContainer.style.display = 'none';
+            return;
+        }
+        
+        suggestionsContainer.innerHTML = '';
+        
+        suggestions.forEach(suggestion => {
+            const div = document.createElement('div');
+            div.className = 'suggestion-item';
+            div.style.cssText = `
+                padding: 8px 12px;
+                cursor: pointer;
+                border-bottom: 1px solid #eee;
+                font-size: 14px;
+            `;
+            
+            if (suggestion.text.startsWith('Category:')) {
+                div.innerHTML = `<i class="fas fa-tags"></i> ${suggestion.text}`;
+                div.style.color = '#6c757d';
+            } else {
+                div.innerHTML = `<i class="fas fa-search"></i> ${suggestion.text}`;
+            }
+            
+            div.addEventListener('click', function() {
+                searchInput.value = suggestion.text.replace('Category: ', '');
+                suggestionsContainer.style.display = 'none';
+                
+                // Trigger form submission
+                const form = searchInput.closest('form');
+                if (form) {
+                    form.submit();
+                }
+            });
+            
+            div.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = '#f8f9fa';
+            });
+            
+            div.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = 'white';
+            });
+            
+            suggestionsContainer.appendChild(div);
+        });
+        
+        suggestionsContainer.style.display = 'block';
+    }
+    
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
+            suggestionsContainer.style.display = 'none';
+        }
+    });
+    
+    // Hide suggestions on escape key
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            suggestionsContainer.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %} 

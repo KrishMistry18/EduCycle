@@ -1,0 +1,248 @@
+{% extends 'hub/base.html' %}
+
+{% block title %}Report a Bug - EduCycle{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Hero Section -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 mb-3">
+                <i class="fas fa-bug text-danger"></i> Report a Bug
+            </h1>
+            <p class="lead text-muted">Help us improve EduCycle by reporting any issues you encounter.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Bug Report Form -->
+        <div class="col-md-8 mb-5">
+            <div class="card shadow-sm">
+                <div class="card-header bg-gradient-danger text-white">
+                    <h5 class="mb-0"><i class="fas fa-exclamation-triangle"></i> Bug Report Form</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Your Name *</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="bug_type" class="form-label">Bug Type *</label>
+                            <select class="form-select" id="bug_type" name="bug_type" required>
+                                <option value="">Select bug type</option>
+                                <option value="ui">User Interface Issue</option>
+                                <option value="functionality">Functionality Problem</option>
+                                <option value="performance">Performance Issue</option>
+                                <option value="security">Security Concern</option>
+                                <option value="payment">Payment System Bug</option>
+                                <option value="search">Search Functionality</option>
+                                <option value="mobile">Mobile Responsiveness</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="severity" class="form-label">Severity Level *</label>
+                            <select class="form-select" id="severity" name="severity" required>
+                                <option value="">Select severity</option>
+                                <option value="low">Low - Minor inconvenience</option>
+                                <option value="medium">Medium - Affects functionality</option>
+                                <option value="high">High - Significant impact</option>
+                                <option value="critical">Critical - System unusable</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Bug Description *</label>
+                            <textarea class="form-control" id="description" name="description" rows="4" placeholder="Please describe the bug in detail..." required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="steps" class="form-label">Steps to Reproduce *</label>
+                            <textarea class="form-control" id="steps" name="steps" rows="4" placeholder="1. Go to...&#10;2. Click on...&#10;3. Expected:...&#10;4. Actual:..." required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="browser" class="form-label">Browser & Version</label>
+                            <input type="text" class="form-control" id="browser" name="browser" placeholder="e.g., Chrome 120.0.6099.109">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="device" class="form-label">Device Information</label>
+                            <input type="text" class="form-control" id="device" name="device" placeholder="e.g., Windows 10, iPhone 14, etc.">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="screenshot" class="form-label">Screenshot (Optional)</label>
+                            <input type="file" class="form-control" id="screenshot" name="screenshot" accept="image/*">
+                            <div class="form-text">Upload a screenshot if possible to help us understand the issue better.</div>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Tip:</strong> The more detailed your report, the faster we can fix the issue!
+                        </div>
+                        
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-paper-plane"></i> Submit Bug Report
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bug Report Guidelines -->
+        <div class="col-md-4 mb-5">
+            <div class="card shadow-sm">
+                <div class="card-header bg-gradient-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-lightbulb"></i> Reporting Guidelines</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="text-primary">Before Reporting:</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Clear your browser cache</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Try refreshing the page</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Check your internet connection</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Try a different browser</li>
+                    </ul>
+                    
+                    <hr>
+                    
+                    <h6 class="text-primary">What to Include:</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-info text-info me-2"></i>Detailed description</li>
+                        <li class="mb-2"><i class="fas fa-info text-info me-2"></i>Step-by-step reproduction</li>
+                        <li class="mb-2"><i class="fas fa-info text-info me-2"></i>Expected vs actual behavior</li>
+                        <li class="mb-2"><i class="fas fa-info text-info me-2"></i>Browser and device info</li>
+                        <li class="mb-2"><i class="fas fa-info text-info me-2"></i>Screenshots if possible</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm mt-4">
+                <div class="card-header bg-gradient-warning text-white">
+                    <h5 class="mb-0"><i class="fas fa-clock"></i> Response Time</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <i class="fas fa-clock text-warning" style="font-size: 2rem;"></i>
+                        <h6 class="mt-2">We typically respond within:</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>Critical bugs:</strong> 2-4 hours</li>
+                            <li><strong>High priority:</strong> 24 hours</li>
+                            <li><strong>Medium priority:</strong> 2-3 days</li>
+                            <li><strong>Low priority:</strong> 1 week</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Common Issues Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4">
+                <i class="fas fa-question-circle text-primary"></i> Common Issues & Solutions
+            </h2>
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas fa-search text-primary"></i> Search Not Working
+                            </h5>
+                            <p class="card-text">If the search function isn't working properly, try:</p>
+                            <ul>
+                                <li>Clearing your browser cache</li>
+                                <li>Using different search terms</li>
+                                <li>Checking your internet connection</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas fa-image text-success"></i> Images Not Loading
+                            </h5>
+                            <p class="card-text">If images aren't displaying:</p>
+                            <ul>
+                                <li>Refresh the page</li>
+                                <li>Check your internet speed</li>
+                                <li>Try a different browser</li>
+                                <li>Clear browser cache</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas fa-shopping-cart text-warning"></i> Cart Issues
+                            </h5>
+                            <p class="card-text">If you're having cart problems:</p>
+                            <ul>
+                                <li>Log out and log back in</li>
+                                <li>Clear browser cookies</li>
+                                <li>Try adding items again</li>
+                                <li>Check if you're logged in</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas fa-mobile-alt text-info"></i> Mobile Issues
+                            </h5>
+                            <p class="card-text">For mobile-specific problems:</p>
+                            <ul>
+                                <li>Update your mobile browser</li>
+                                <li>Try desktop version</li>
+                                <li>Check mobile data connection</li>
+                                <li>Restart your device</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alternative Contact Methods -->
+    <div class="row">
+        <div class="col-12 text-center">
+            <h3 class="mb-4">Need Immediate Help?</h3>
+            <p class="text-muted mb-4">If you need urgent assistance, try these alternatives:</p>
+            <div class="d-flex justify-content-center flex-wrap">
+                <a href="{% url 'contact_us' %}" class="btn btn-outline-primary me-3 mb-2">
+                    <i class="fas fa-envelope"></i> Contact Support
+                </a>
+                <a href="{% url 'help_center' %}" class="btn btn-outline-success me-3 mb-2">
+                    <i class="fas fa-question-circle"></i> Help Center
+                </a>
+                <a href="mailto:support@educycle.com" class="btn btn-outline-info mb-2">
+                    <i class="fas fa-at"></i> Email Support
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

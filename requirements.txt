@@ -1,0 +1,38 @@
+# ─── Core Django ─────────────────────────────────────────────
+Django==5.2
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+
+# ─── Authentication ───────────────────────────────────────────
+djangorestframework-simplejwt==5.5.1
+
+# ─── API Utilities ────────────────────────────────────────────
+django-filter==23.5
+drf-yasg==1.21.7
+
+# ─── Rate Limiting ────────────────────────────────────────────
+django-ratelimit==4.1.0
+
+# ─── Database (PostgreSQL for Supabase/Vercel) ────────────────
+dj-database-url==2.1.0
+# psycopg2-binary==2.9.10
+
+# ─── Payments ─────────────────────────────────────────────────
+stripe>=7.0.0
+
+# ─── Image Processing ─────────────────────────────────────────
+Pillow>=10.0.0
+
+# ─── Environment Variables ────────────────────────────────────
+python-dotenv==1.0.0
+
+# ─── Production Server ────────────────────────────────────────
+gunicorn==21.2.0
+whitenoise==6.6.0
+
+# ─── Utilities ────────────────────────────────────────────────
+setuptools>=68.0.0
+
+# ─── Storage ──────────────────────────────────────────────────
+django-storages==1.14.2
+google-cloud-storage==2.14.0

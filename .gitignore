@@ -1,0 +1,65 @@
+# ─── Python ──────────────────────────────────────────────────
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+.Python
+venv/
+env/
+ENV/
+.venv/
+.coverage
+.pytest_cache/
+htmlcov/
+
+# ─── Django ──────────────────────────────────────────────────
+*.sqlite3
+*.db
+local_settings.py
+staticfiles/
+media/item_images/
+!media/.gitkeep
+!media/item_images/.gitkeep
+
+# ─── Environment ─────────────────────────────────────────────
+.env
+.env.local
+!.env.example
+edycycle-2b8e7-firebase-adminsdk-fbsvc-888063912e.json
+*_firebase.py
+seed_new_items.py
+update_images.py
+
+# ─── Node / React (not used) ─────────────────────────────────
+node_modules/
+build/
+src/
+public/
+frontend/
+package.json
+package-lock.json
+vite.config.js
+index.html
+.nvmrc
+.node-version
+.env.production
+
+# ─── IDEs ────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# ─── Misc ────────────────────────────────────────────────────
+*.bak
+*.tmp
+*.orig
+gen_sql.py
+neon_migrations.sql
+IMPLEMENTATION_SUMMARY.md
+PROJECT_COMPLETION_SUMMARY.md
+.vite/
