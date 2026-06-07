@@ -21,6 +21,7 @@ from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('fix-images/', include([path('', __import__('hub.views').views.fix_images)])),
     path('', include('hub.urls')),
     # Vercel serverless: explicitly serve bundled media files in production.
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),

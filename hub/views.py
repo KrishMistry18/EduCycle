@@ -663,4 +663,33 @@ def get_chat_history(request, session_id):
     
     return JsonResponse({'messages': messages})
 
-
+def fix_images(request):
+    """Temporary endpoint to force fix Supabase image paths"""
+    image_mapping = {
+        'iPad Air M1 - Space Grey': 'item_images/ipad_air_1780823712450.png',
+        'Adv. Engineering Math Set': 'item_images/math_set_1780823724516.png',
+        'Casio fx-991EX Classwiz': 'item_images/casio_calculator_1780823738291.png',
+        'Lab Coat & Safety Goggles': 'item_images/lab_coat_1780823751372.png',
+        'Mini Fridge 50L': 'item_images/mini_fridge_1780823762670.png',
+        'Introduction to Algorithms': 'item_images/algorithms_book_1780823773471.png',
+        'Drawing Board': 'item_images/drawing_board_1780824341469.png',
+        'French Curve set': 'item_images/french_curve_1780824353440.png',
+        'Workshop apron': 'item_images/workshop_apron_1780824365612.png',
+        'Lab coat': 'item_images/lab_coat_single_1780824476245.png',
+        'Breadboard': 'item_images/breadboard_1780824385364.png',
+        'Folders': 'item_images/folders_1780824397731.png',
+        'Mechanical Pencil': 'item_images/mechanical_pencil_1780824408512.png',
+        'Set of Technical Files': 'item_images/technical_files_1780824420585.png',
+        'Set Squares (Professional)': 'item_images/set_squares_1780824441066.png',
+        'Roller Scale': 'item_images/roller_scale_1780824453367.png',
+        'Mini Drafter': 'item_images/mini_drafter_1780824465876.png'
+    }
+    
+    output = []
+    # Try inexact matching just in case (e.g. trailing spaces)
+    for name, image_path in image_mapping.items():
+        items = Item.objects.filter(name__icontains=name.strip())
+        count = items.update(image1=image_path)
+        output.append(f"Updated {count} items for {name}")
+        
+    return HttpResponse("<br>".join(output) + "<br><br><b>Done! Go back to homepage and refresh.</b>")
